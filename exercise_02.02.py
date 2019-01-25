@@ -6,7 +6,7 @@ Hello Chuck
 Python for Everybody: Exploring Data Using Python 3
 By Charles Severance
 
--------------
+....
 
 name = input("Enter your name: ")
 print('Hello ' + name)
