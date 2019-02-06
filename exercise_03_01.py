@@ -20,4 +20,4 @@ if fh > 40:
     xp = reg + otp
 else:
     xp = fh * fr
-print("Pay:",xp)
+print('Pay:',xp)
