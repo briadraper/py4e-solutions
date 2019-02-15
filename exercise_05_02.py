@@ -20,5 +20,5 @@ while True :
     except :
             print('Invalid input')
 
-print ('Maximum is', largest)
-print ('Minimum is', smallest)
+print ('Maximum is ', largest)
+print ('Minimum is ', smallest)
