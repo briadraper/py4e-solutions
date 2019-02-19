@@ -18,13 +18,14 @@ Excerpt From: Charles R. Severance. “Python for Informatics: Exploring Informa
 
 fname = input('Enter file name: ')
 fh = open(fname)
-lst = list()
+mylist = []
 for line in fh:
     word = line.rstrip().split()
     for element in word:
-        if element in lst:
+        if element in mylist:
             continue
         else :
-            lst.append(element)
-lst.sort()
-print(lst)
+            mylist.append(element)
+mylist.sort()
+print(mylist)
+
