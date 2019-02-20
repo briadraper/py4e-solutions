@@ -22,6 +22,6 @@ days = dict()                             #create a dictionary named "days"
 for line in fhandle:                      
     if line.startswith ('From '):         #split each line in file and skip any line that does not start with 'From '
         word = line.split()               #split each word on each line that starts with 'From '
-        day = word[2]                     #parse the 3rd word out
+        day = word[2]                     #pull out the third word
         days[day] = days.get(day,0) + 1   #count how many times the third word occurs
 print(days)
