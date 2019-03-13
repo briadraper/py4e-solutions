@@ -1,0 +1,69 @@
+"Extracting Data from JSON
+
+In this assignment you will write a Python program somewhat similar to http://www.py4e.com/code3/json2.py. The program will prompt for a URL, read the JSON data from that URL using urllib and then parse and extract the comment counts from the JSON data, compute the sum of the numbers in the file and enter the sum below:
+
+We provide two files for this assignment. One is a sample file where we give you the sum for your testing and the other is the actual data you need to process for the assignment.
+
+Sample data: http://py4e-data.dr-chuck.net/comments_42.json (Sum=2553)
+Actual data: http://py4e-data.dr-chuck.net/comments_140570.json (Sum ends with 81)
+You do not need to save these files to your folder since your program will read the data directly from the URL. Note: Each student will have a distinct data url for the assignment - so only use your own data url for analysis.
+Data Format
+The data consists of a number of names and comment counts in JSON as follows:
+
+{
+  comments: [
+    {
+      name: "Matthias"
+      count: 97
+    },
+    {
+      name: "Geomer"
+      count: 97
+    }
+    ...
+  ]
+}
+The closest sample code that shows how to parse JSON and extract a list is json2.py. You might also want to look at geoxml.py to see how to prompt for a URL and retrieve data from a URL.
+
+Sample Execution
+
+$ python3 solution.py
+Enter location: http://py4e-data.dr-chuck.net/comments_42.json
+Retrieving http://py4e-data.dr-chuck.net/comments_42.json
+Retrieved 2733 characters
+Count: 50
+Sum: 2..."
+
+Excerpt From: Charles R. Severance. https://www.py4e.com/tools/python-data/index.php?PHPSESSID=fe9b7932a115974ec2341d04f07bbfbd
+
+....
+
+import urllib.request, urllib.parse, urllib.error
+import json
+import ssl
+
+counts = list()                               #make a list called 'counts'
+
+url = input('Enter URL: ')
+#ignore SSL certificate errors
+ctx = ssl.create_default_context()
+ctx.check_hostname = False
+ctx.verify_mode = ssl.CERT_NONE
+
+uh = urllib.request.urlopen(url, context=ctx) #open the url and store it in a variable called 'uh'
+data = uh.read()                              #read the data
+print('Retrieved', len(data), 'characters')   #print the length of all the retrieved characters from the url
+
+try:
+    info = json.loads(data)                   #load the data into a python list
+except:
+    info = None
+
+count = 0
+comments = info['comments']                 #pull out the 'comments' tag from the list and assign it to the variable 'comments'
+for comment in comments:                      #iterate through the list and pull out the 'comment' tag
+    counts.append(comment['count'])           #pull out the key 'count' and append it to the list 'counts'
+    count = count + 1                         #count the the number of times 'count' appears in the element 'comment'
+
+print('Count: ', count)
+print('Sum: ', sum(counts))
