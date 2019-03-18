@@ -1,0 +1,75 @@
+"Calling a JSON API
+
+In this assignment you will write a Python program somewhat similar to http://www.py4e.com/code3/geojson.py. The program will prompt for a location, contact a web service and retrieve JSON for the web service and parse that data, and retrieve the first place_id from the JSON. A place ID is a textual identifier that uniquely identifies a place as within Google Maps.
+API End Points
+
+To complete this assignment, you should use this API endpoint that has a static subset of the Google Data:
+
+http://py4e-data.dr-chuck.net/json?
+This API uses the same parameter (address) as the Google API. This API also has no rate limit so you can test as often as you like. If you visit the URL with no parameters, you get "No address..." response.
+To call the API, you need to provide address that you are requesting as the address= parameter that is properly URL encoded using the urllib.urlencode() fuction as shown in http://www.py4e.com/code3/geojson.py
+
+Test Data / Sample Execution
+
+You can test to see if your program is working with a location of "South Federal University" which will have a place_id of "ChIJdxDeChG540ARgFsT__nQU6E".
+
+$ python3 solution.py
+Enter location: South Federal University
+Retrieving http://...
+Retrieved 3982 characters
+Place id ChIJdxDeChG540ARgFsT__nQU6E
+Turn In
+
+Please run your program to find the place_id for this location:
+
+Groep T University
+Make sure to enter the name and case exactly as above and enter the place_id and your Python code below. Hint: The first seven characters of the place_id are "ChIJX_P ..."
+Make sure to retreive the data from the URL specified above and not the normal Google API. Your program should work with the Google API - but the place_id may not match for this assignment."
+
+Excerpt From: Charles R. Severance. https://www.py4e.com/tools/python-data/index.php?PHPSESSID=fe9b7932a115974ec2341d04f07bbfbd
+
+....
+
+import urllib.request, urllib.parse, urllib.error
+import json
+import ssl
+
+api_key = False
+
+if api_key is False:
+    api_key = 42
+serviceurl = 'http://py4e-data.dr-chuck.net/json?'    #Using this url provides a static set of data in order to retrieve the    
+                                                      #correct answer
+
+# Ignore SSL certificate errors
+ctx = ssl.create_default_context()
+ctx.check_hostname = False
+ctx.verify_mode = ssl.CERT_NONE
+
+while True:
+    address = input('Enter location: ')
+    if len(address) < 1: break
+
+    parms = dict()                                       #Create a dictionary to parse the url
+    parms['address'] = address                           #Make 'address' a key in the dictionary
+    if api_key is not False: parms['key'] = api_key
+    url = serviceurl + urllib.parse.urlencode(parms)     #retrieve the service url, parse and encode it
+
+    print('Retrieving', url)
+    uh = urllib.request.urlopen(url, context=ctx)     
+    data = uh.read().decode()                            #Read and decode the encoded url
+    print('Retrieved', len(data), 'characters')
+
+    try:
+        js = json.loads(data)                            #Parse the data with the json library 
+    except:
+        js = None
+
+    print(json.dumps(js, indent=4))
+    place_id = js['results'][0]['place_id']             #Extract the data we need
+    #print('Place id', place_id)
+    #lat = js['results'][0]['geometry']['location']['lat']
+    #lng = js['results'][0]['geometry']['location']['lng']
+    #print('lat', lat, 'lng', lng)
+    #location = js['results'][0]['formatted_address']
+    #print(location)
