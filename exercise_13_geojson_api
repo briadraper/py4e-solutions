@@ -38,8 +38,8 @@ api_key = False
 
 if api_key is False:
     api_key = 42
-serviceurl = 'http://py4e-data.dr-chuck.net/json?'    #Using this url provides a static set of data in order to retrieve the    
-                                                      #correct answer
+serviceurl = 'http://py4e-data.dr-chuck.net/geojson?'    #Using this url provides a static set of data in order to retrieve the    
+                                                            #correct answer
 
 # Ignore SSL certificate errors
 ctx = ssl.create_default_context()
@@ -50,10 +50,8 @@ while True:
     address = input('Enter location: ')
     if len(address) < 1: break
 
-    parms = dict()                                       #Create a dictionary to parse the url
-    parms['address'] = address                           #Make 'address' a key in the dictionary
-    if api_key is not False: parms['key'] = api_key
-    url = serviceurl + urllib.parse.urlencode(parms)     #retrieve the service url, parse and encode it
+    url = serviceurl + urllib.parse.urlencode(
+        {'address': address})
 
     print('Retrieving', url)
     uh = urllib.request.urlopen(url, context=ctx)     
