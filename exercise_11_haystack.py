@@ -11,7 +11,7 @@ These links open in a new window. Make sure to save the file into the same folde
 
 https://www.py4e.com/tools/python-data/index.php?PHPSESSID=b34776b1bb7220a44fae8e5ad05b8981
 
-....
+.....
 
 import re
 
